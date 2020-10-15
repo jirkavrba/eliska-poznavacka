@@ -1,4 +1,6 @@
 class QuestionSetsController < ApplicationController
+  before_action :load_question_set, except: [:index, :new, :create]
+
   def index
     @question_sets = QuestionSet.all
   end
@@ -18,16 +20,11 @@ class QuestionSetsController < ApplicationController
     end
   end
 
-  def show
-    @question_set = QuestionSet.find(params[:id])
-  end
+  def show; end
 
-  def edit
-    @question_set = QuestionSet.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @question_set = QuestionSet.find(params[:id])
     @question_set.update(params.require(:question_set).permit(:name))
 
     if @question_set.valid?
@@ -38,12 +35,17 @@ class QuestionSetsController < ApplicationController
     end
   end
 
-  def test
-    @question_set = QuestionSet.find(params[:id])
+  def test; end
+
+  def next_question
+    render json: @question_set.questions.order(
+      incorrectly_answered_times: :asc,
+      correctly_answered_times: :desc,
+      updated_at: :desc
+    ).first
   end
 
   def reset
-    @question_set = QuestionSet.find(params[:id])
     @question_set.questions.update({
        viewed_times: 0,
        correctly_answered_times: 0,
@@ -51,5 +53,11 @@ class QuestionSetsController < ApplicationController
      })
 
     redirect_to question_set_path(@question_set.id)
+  end
+
+  private 
+
+  def load_question_set
+    @question_set = QuestionSet.find(params[:id])
   end
 end

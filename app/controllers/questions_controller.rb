@@ -1,5 +1,5 @@
 class QuestionsController < ApplicationController
-  before_action :load_question_set
+  before_action :load_question_set, except: [:index, :new, :create]
 
   def index
     @questions = @question_set.questions
@@ -21,9 +21,7 @@ class QuestionsController < ApplicationController
     end
   end
 
-  def edit
-    @question = @question_set.questions.find(params[:id])
-  end
+  def edit; end
 
   def update
     @question = @question_set.questions.find(params[:id])
@@ -35,6 +33,20 @@ class QuestionsController < ApplicationController
       flash[:errors] = @question.errors.full_messages
       redirect_to edit_question_set_question_path(@question_set, @question)
     end
+  end
+
+  def correctly_answered
+    @question.correctly_answered += 1
+    @question.save
+
+    render json: @quesiton
+  end
+
+  def incorrectly_answered
+    @question.incorrectly_answered += 1
+    @question.save
+
+    render json: @quesiton
   end
 
   private
