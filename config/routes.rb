@@ -1,3 +1,10 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  resources :question_sets do
+    resources :questions
+
+    post :reset, on: :member
+    get  :test, on: :member
+  end
+
+  root 'question_sets#index'
 end

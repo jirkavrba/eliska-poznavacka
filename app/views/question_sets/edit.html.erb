@@ -1,0 +1,9 @@
+<h1>Upravit sadu <%= @question_set.name %></h1>
+
+<%= form_for @question_set do |form| %>
+  <%= form.label :name, "Název sady:" %>
+  <%= form.text_field :name, required: true %>
+
+  <%= form.submit "Uložit" %>
+<% end %>
+

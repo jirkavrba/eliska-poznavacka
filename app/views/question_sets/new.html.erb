@@ -1,0 +1,11 @@
+<%= form_for @question_set do |form| %>
+  <%= form.label :name, "Název sady:" %>
+  <%= form.text_field :name, required: true %>
+
+  <%= form.submit "Vytvořit" %>
+
+  <br>
+
+  <%= link_to "Zpět", question_sets_path, type: :button %>
+<% end %>
+

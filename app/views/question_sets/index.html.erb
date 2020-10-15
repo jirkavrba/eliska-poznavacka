@@ -1,0 +1,7 @@
+<h1>Dostupné sady</h1>
+
+<% @question_sets.each do |set| %>
+  <h2><%= link_to set.name, question_set_path(set.id) %> &mdash; <%= set.questions.count %> kartiček</h2>
+<% end %>
+
+<%= button_to "Vytvořit novou sadu", new_question_set_path, method: :get %>
