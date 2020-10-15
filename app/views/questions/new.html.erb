@@ -1,0 +1,23 @@
+<h1>Přidat kartičku do sady <%= @question_set.name %></h1>
+
+<%= button_to 'Zpět', question_set_questions_path(@question_set), method: :get %>
+
+<hr>
+
+<%= link_to 'Odkaz pro nahrávání obrázků', 'https://imgur.com/upload', target: :blank %>
+
+<hr>
+
+<%= form_for [@question_set, @question] do |form| %>
+  <%= form.label 'URL obrázku' %>
+  <%= form.text_field :image_url, required: true %> 
+  <br>
+
+  <%= form.label 'Odpověď' %>
+  <%= form.text_field :answer, required: true %> 
+  <br>
+
+  <%= form.submit 'Uložit' %>
+  <%= form.button 'Uložit a přidat další', name: :add_next, value: true %>
+<% end %>
+

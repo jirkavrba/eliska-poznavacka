@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 2020_10_15_185513) do
 
   create_table "questions", force: :cascade do |t|
     t.integer "question_set_id"
-    t.string "question"
+    t.string "image_url"
     t.string "answer"
     t.integer "viewed_times", default: 0
     t.integer "correctly_answered_times", default: 0

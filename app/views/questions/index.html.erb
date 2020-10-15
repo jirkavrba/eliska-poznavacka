@@ -1,0 +1,22 @@
+<h1><%= @question_set.name %>: Správa kartiček</h1>
+
+<%= button_to 'Zpět', question_set_path(@question_set), method: :get %>
+<%= button_to 'Přidat kartičku', new_question_set_question_path(@question_set), method: :get %>
+<%= button_to 'Resetovat pokrok u všech kartiček', reset_question_set_path(@question_set), data: { confirm: 'Opravdu chceš resetovat pokrok u všech kartiček?' }%>
+
+<hr>
+<ul>
+<% @questions.each do |question| %>
+  <li>
+    <img src="<%= question.image_url %>" width="100">
+    <b><%= question.answer %></b> &mdash;
+    <%= question.correctly_answered_times %> &times; správně, 
+    <%= question.incorrectly_answered_times %> &times; špatně &rarr;
+    <%= question.success_ratio * 100 %>%
+
+    <%= button_to 'Upravit', edit_question_set_question_path(@question_set, question), method: :get %>
+    <%= button_to 'Smazat', question_set_question_path(@question_set, question), method: :delete, data: { confirm: 'Opravdu chceš smazat tuto kartičku?' } %>
+    <%#= button_to 'Resetovat pokrok', edit_question_set_question_path(@question_set, question), method: :get %>
+  </li>
+<% end %>
+</ul>

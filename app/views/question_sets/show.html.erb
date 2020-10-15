@@ -1,11 +1,16 @@
-<%= link_to "Zpět", question_sets_path %>
 <h1><%= @question_set.name %></h1>
 <h2>Sada obsahuje <%= @question_set.questions.count %> kartiček</h2>
 
+<%= button_to "Zpět", question_sets_path, method: :get %>
 <%= button_to "Spustit test", test_question_set_path(@question_set.id), method: :get %>
 
 <hr>
 
 <%= button_to "Upravit", edit_question_set_path(@question_set.id), method: :get %>
 <%= button_to "Správa kartiček", question_set_questions_path(@question_set.id), method: :get %>
-<%= button_to "Resetovat pokrok", reset_question_set_path(@question_set.id), data: { confirm: "Opravdu chceš resetovat pokrok?" } %>
+
+<hr>
+
+<% @question_set.questions.each do |question| %>
+  <img src="<%= question.image_url %>" height="100">
+<% end %>
