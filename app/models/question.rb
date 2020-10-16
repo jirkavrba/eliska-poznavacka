@@ -5,8 +5,8 @@ class Question < ApplicationRecord
   validates :answer, presence: true
 
   def success_ratio
-    return 0 if self.correctly_answered_times == 0
-    
-    self.viewed_times / self.correctly_answered_times
+    return 0 if viewed_times.zero?
+
+    correctly_answered_times.to_f / viewed_times
   end
 end

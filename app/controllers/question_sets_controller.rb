@@ -38,12 +38,10 @@ class QuestionSetsController < ApplicationController
   def test; end
 
   def next_question
-    least_succesfull = @question_set
-                       .questions
-                       .order(correctly_answered_times: :desc)
-                       .all
-
-    render json: least_succesfull.to_a.sample
+    render json: @question_set
+      .questions
+      .order(viewed_times: :asc, correctly_answered_times: :desc)
+      .first
   end
 
   def reset

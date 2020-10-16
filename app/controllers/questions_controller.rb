@@ -49,16 +49,12 @@ class QuestionsController < ApplicationController
     @question.viewed_times += 1
     @question.correctly_answered_times += 1
     @question.save
-
-    render json: @quesiton
   end
 
   def incorrectly_answered
     @question = @question_set.questions.find(params[:id])
     @question.viewed_times += 1
     @question.save
-
-    render json: @quesiton
   end
 
   private
