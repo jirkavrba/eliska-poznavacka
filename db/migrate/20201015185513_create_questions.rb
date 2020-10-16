@@ -6,7 +6,6 @@ class CreateQuestions < ActiveRecord::Migration[6.0]
       t.string :answer
       t.integer :viewed_times, default: 0
       t.integer :correctly_answered_times, default: 0
-      t.integer :incorrectly_answered_times, default: 0
 
       t.timestamps
     end

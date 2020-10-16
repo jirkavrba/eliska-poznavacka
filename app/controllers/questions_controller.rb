@@ -35,6 +35,13 @@ class QuestionsController < ApplicationController
     end
   end
 
+  def destroy
+    @question = @question_set.questions.find(params[:id])
+    @question.delete
+
+    redirect_to question_set_questions_path(@question_set)
+  end
+
   def correctly_answered
     @question.correctly_answered += 1
     @question.save

@@ -25,8 +25,6 @@ ActiveRecord::Schema.define(version: 2020_10_15_185513) do
     t.string "answer"
     t.integer "viewed_times", default: 0
     t.integer "correctly_answered_times", default: 0
-    t.integer "incorrectly_answered_times", default: 0
-    t.datetime "last_answered_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
