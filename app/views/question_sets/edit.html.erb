@@ -1,9 +1,16 @@
-<h1>Upravit sadu <%= @question_set.name %></h1>
-
-<%= form_for @question_set do |form| %>
-  <%= form.label :name, "Název sady:" %>
-  <%= form.text_field :name, required: true %>
-
-  <%= form.submit "Uložit" %>
-<% end %>
-
+<div class="card">
+  <div class="card-body">
+    <h2 class="card-title">Upravit sadu <span class="text-primary"><%= @question_set.name %></span></h2>
+    <div class="card-text">
+      <%= form_for @question_set do |form| %>
+      <hr>
+        <div class="form-group">
+          <%= form.label :name, "Název sady:" %>
+          <%= form.text_field :name, required: true, class: 'form-control' %>
+        </div>
+      <hr>
+      <%= form.submit "Uložit", class: 'btn btn-success' %>
+      <%= link_to "Zpět", question_sets_path, class: 'btn btn-secondary' %>
+      <% end %>
+  </div>
+</div>

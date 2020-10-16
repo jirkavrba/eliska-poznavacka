@@ -1,7 +1,31 @@
-<h1>Dostupné sady</h1>
-
-<% @question_sets.each do |set| %>
-  <h2><%= link_to set.name, question_set_path(set.id) %> &mdash; <%= set.questions.count %> kartiček</h2>
-<% end %>
-
-<%= button_to "Vytvořit novou sadu", new_question_set_path, method: :get %>
+<div class="card">
+  <div class="card-body">
+    <h2 class="card-title">Sady kartiček</h2>
+    <div class="card-text">
+    <hr>
+    <% if @question_sets.empty? %>
+      <p class="text-muted">V databázi nejsou žádné sady</p>
+    <% else %>
+      <div class="row">
+        <% @question_sets.each do |set| %>
+          <div class="col-sm-12 col-md-4">
+            <div class="card">
+              <% unless set.questions.empty? %>
+                <img src="<%= set.questions.first.image_url %>" class="card-img-top">
+              <% end %>
+              <div class="card-body">
+                <h4 class="card-title"><%= set.name %></h4>
+                <div class="card-text text-muted">Obsahuje <%= set.questions.count %> kartiček</div>
+                <hr>
+                <%= link_to 'Otevřít', question_set_path(set.id), class: 'btn btn-primary' %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+    </div>
+    <hr>
+      <%= link_to "Vytvořit novou sadu", new_question_set_path, class: 'btn btn-success' %>
+  </div>
+</div>

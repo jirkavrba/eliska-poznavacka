@@ -7,6 +7,6 @@ class Question < ApplicationRecord
   def success_ratio
     return 0 if self.correctly_answered_times == 0
     
-    (self.correctly_answered_times + self.incorrectly_answered_times) / self.correctly_answered_times
+    self.viewed_times / self.correctly_answered_times
   end
 end

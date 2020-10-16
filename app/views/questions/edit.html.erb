@@ -1,31 +1,29 @@
-<h1>Upravit kartičku ze sady <%= @question_set.name %></h1>
+<div class="card">
+  <div class="card-body">
+    <h2 class="card-title">Upravit kartičku ze sady <%= @question_set.name %></h2>
+    <div class="card-text">
+      <hr>
+        <%= link_to 'Odkaz pro nahrávání obrázků', 'https://imgur.com/upload', target: :blank %>
+      <%= form_for [@question_set, @question] do |form| %>
+      <hr>
+      <div class="row">
+        <div class="col-sm-12 col-md-6">
+          <div class="form-group">
+            <%= form.label 'URL obrázku' %>
+            <%= form.text_field :image_url, required: true, class: 'form-control'%> 
+          </div>
+        </div>
 
-<%= button_to 'Zpět', question_set_question_path(@question_set, @question), method: :get %>
-
-<hr>
-
-<%= link_to 'Odkaz pro nahrávání obrázků', 'https://imgur.com/upload', target: :blank %>
-
-<hr>
-
-<%= form_for [@question_set, @question] do |form| %>
-
-  <p>Původní obrázek:</p>
-  <img src="<%= @question.image_url %>" width="100">
-
-  <br>
-
-  <p>Původní odpověď: <em><%= @question.answer %></em></p>
-
-
-  <%= form.label 'URL obrázku' %>
-  <%= form.text_field :image_url, required: true %> 
-  <br>
-
-  <%= form.label 'Odpověď' %>
-  <%= form.text_field :answer, required: true %> 
-  <br>
-
-  <%= form.submit 'Uložit změny' %>
-<% end %>
-
+        <div class="col-sm-12 col-md-6">
+          <div class="form-group">
+            <%= form.label 'Odpověď' %>
+            <%= form.text_field :answer, required: true, class: 'form-control'%> 
+          </div>
+        </div>
+      </div>
+      <hr>
+      <%= form.submit 'Uložit změny', class: 'btn btn-success' %>
+      <%= link_to 'Zpět', question_set_questions_path(@question_set), class: 'btn btn-dark' %>
+      <% end %>
+  </div>
+</div>

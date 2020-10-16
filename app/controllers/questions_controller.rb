@@ -21,7 +21,9 @@ class QuestionsController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+    @question = @question_set.questions.find(params[:id])
+  end
 
   def update
     @question = @question_set.questions.find(params[:id])
