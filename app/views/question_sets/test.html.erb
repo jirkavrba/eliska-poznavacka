@@ -1,4 +1,75 @@
 <div class="text-center">
     <h1><%= @question_set.name %></h1>
-</div>
 
+    <div class="card">
+        <div class="card-body text-center">
+            <img id="question_image" src="" style="display: none">
+
+            <hr>
+
+            <h1 id="answer"></h1>
+
+            <hr>
+
+            <button id="reveal" class="btn btn-primary">Odkrýt</button>
+            <button id="correct" class="btn btn-success" style="display: none">Správně</button>
+            <button id="incorrect" class="btn btn-danger" style="display: none">Špatně</button>
+        </div>
+    </div>
+
+    <script>
+        $(function () {
+            const image = $("#question_image");
+            const answer = $("#answer");
+            const reveal = $("#reveal");
+            const correct = $("#correct");
+            const incorrect = $("#incorrect");
+
+            function load_next_question() {
+                fetch("<%= next_question_question_set_url(@question_set) %>")
+                    .then(response => response.json())
+                    .then(response => {
+                        image.prop("src", response.image_url).slideDown();
+                        answer.text("???").prop("data-answer", response.answer);
+
+                        correct.hide().prop("data-id", response.id);
+                        incorrect.hide().prop("data-id", response.id);
+
+                        reveal.show();
+                    });
+            }
+
+            reveal.click(function () {
+                answer.text(answer.prop("data-answer"));
+
+                correct.show();
+                incorrect.show();
+
+                reveal.hide();
+            });
+
+             // always pass csrf tokens on ajax calls
+            $.ajaxSetup({
+                headers: { 'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content') }
+            });
+
+            correct.click(function () {
+                $.ajax({
+                    method: "post",
+                    url: "<%= correctly_answered_question_set_question_url(@question_set, "ID") %>".replace("ID", $(this).prop("data-id")),
+                    success: load_next_question
+                })
+            });
+
+            incorrect.click(function () {
+                $.ajax({
+                    method: "post",
+                    url: "<%= incorrectly_answered_question_set_question_url(@question_set, "ID") %>".replace("ID", $(this).prop("data-id")),
+                    success: load_next_question
+                })
+            });
+
+            load_next_question();
+        });
+    </script>
+</div>

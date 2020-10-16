@@ -45,14 +45,17 @@ class QuestionsController < ApplicationController
   end
 
   def correctly_answered
-    @question.correctly_answered += 1
+    @question = @question_set.questions.find(params[:id])
+    @question.viewed_times += 1
+    @question.correctly_answered_times += 1
     @question.save
 
     render json: @quesiton
   end
 
   def incorrectly_answered
-    @question.incorrectly_answered += 1
+    @question = @question_set.questions.find(params[:id])
+    @question.viewed_times += 1
     @question.save
 
     render json: @quesiton
