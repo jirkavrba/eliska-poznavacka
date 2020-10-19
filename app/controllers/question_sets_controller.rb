@@ -41,9 +41,9 @@ class QuestionSetsController < ApplicationController
     render json: @question_set
       .questions
       .order(
-        updated_at: :asc,
         correctly_answered_times: :desc,
         viewed_times: :asc,
+        updated_at: :asc,
         random_index: :desc
       )
       .first

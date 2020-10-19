@@ -59,7 +59,9 @@
             else {
                 $("#alert").removeClass("alert-success")
                     .addClass("alert-danger")
-                    .text("Bohužel... Správná odpověď byla: " + input.getValue())
+                    .text("Bohužel... Správná odpověď byla: " +
+                        input.divide(units[$("#output-unit").text()]).getValue()
+                    )
                     .slideDown();
             }
           });
