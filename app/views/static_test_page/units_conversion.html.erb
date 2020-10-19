@@ -1,0 +1,72 @@
+<h1>Převody jednotek</h1>
+
+<div class="card">
+  <div class="card-body">
+    <div id="alert" class="alert alert-success" style="display: none"></div>
+    <div class="form-inline">
+      <h2>
+        <span id='input-value'>-</span>
+        <span id='input-unit'>-</span> =
+        <input id='output' type="number" class="form-control-lg">
+        <span id='output-unit'>-</span>
+      </h2>
+    </div>
+    <hr>
+    <button id="check" class="btn btn-primary">Zkontrolovat</button>
+    <button id="next-question" class="btn btn-secondary">Další příklad</button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/js-big-decimal@1.3.1/dist/web/js-big-decimal.min.js"></script>
+  <script>
+      $(function () {
+
+          const units = {
+              'p': new bigDecimal('0.000000000001'),
+              'n': new bigDecimal('0.000000001'),
+              'u': new bigDecimal('0.000001'),
+              'm': new bigDecimal('0.001'),
+              // 'c': new bigDecimal('0.01'),
+              // 'd': new bigDecimal('0.1'),
+              ' ': new bigDecimal('1'),
+              // 'da': new bigDecimal('10'),
+              // 'h': new bigDecimal('100'),
+              'k': new bigDecimal('1000'),
+              'M': new bigDecimal('1000000'),
+              'G': new bigDecimal('1000000000'),
+              'T': new bigDecimal('1000000000000'),
+          };
+
+          function new_input() {
+            const shuffled = Object.keys(units).sort(() => Math.random() - 0.5).slice(0, 2);
+
+            $('#input-value').text(Math.floor(Math.random() * 1000));
+            $('#input-unit').text(shuffled[0]);
+            $("#output-unit").text(shuffled[1]);
+
+            $("#alert").slideUp();
+          }
+
+          $('#check').click(function () {
+            const input = new bigDecimal($("#input-value").text()).multiply(units[$("#input-unit").text()])
+            const output = new bigDecimal($("#output").val()).multiply(units[$("#output-unit").text()])
+
+            if (input.compareTo(output) === 0) {
+                $("#alert").removeClass("alert-danger")
+                  .addClass("alert-success")
+                  .text("Správně!")
+                  .slideDown();
+            }
+            else {
+                $("#alert").removeClass("alert-success")
+                    .addClass("alert-danger")
+                    .text("Bohužel... Správná odpověď byla: " + input.getValue())
+                    .slideDown();
+            }
+          });
+
+          $("#next-question").click(new_input);
+
+          new_input();
+      });
+  </script>
+</div>

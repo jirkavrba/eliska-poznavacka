@@ -1,5 +1,5 @@
 class QuestionSetsController < ApplicationController
-  before_action :load_question_set, except: [:index, :new, :create]
+  before_action :load_question_set, except: %i[index new create]
 
   def index
     @question_sets = QuestionSet.all

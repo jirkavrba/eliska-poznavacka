@@ -11,7 +11,10 @@ Rails.application.routes.draw do
     get :next_question, on: :member
 
     post :reset, on: :member
+
   end
+
+  get '/static-test/unit-conversion', to: 'static_test_page#units_conversion'
 
   root 'question_sets#index'
 end
