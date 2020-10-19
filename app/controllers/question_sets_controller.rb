@@ -35,19 +35,15 @@ class QuestionSetsController < ApplicationController
     end
   end
 
-  def test
-    # Shuffle the questions on each visit
-    @question_set.questions.each do |question|
-      question.update(random_index: rand * 100_000_000)
-    end
-  end
+  def test; end
 
   def next_question
     render json: @question_set
       .questions
       .order(
-        viewed_times: :asc,
+        updated_at: :asc,
         correctly_answered_times: :desc,
+        viewed_times: :asc,
         random_index: :desc
       )
       .first
@@ -56,7 +52,8 @@ class QuestionSetsController < ApplicationController
   def reset
     @question_set.questions.update({
                                      viewed_times: 0,
-                                     correctly_answered_times: 0
+                                     correctly_answered_times: 0,
+                                     last_viewed_at: DateTime.new
                                    })
 
     redirect_to question_set_questions_path(@question_set)
